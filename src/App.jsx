@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/purity */
 import Die from './components/Die'
+import { useState } from 'react'
 
 export default function App() {  
 
-  function generateAllNewDice (){
+  function generateAllNewDice(){
     const randomNumbers = [];
     for (let i = 0; i < 10; i++) {
       randomNumbers.push(Math.ceil(Math.random() * 6))
@@ -14,19 +15,18 @@ export default function App() {
   }
   console.log(generateAllNewDice())
 
+  const [dice, setDice] = useState(generateAllNewDice)
+
+  const diceElements = dice.map((number, index) => {
+    return (
+      <Die key={index} value={number} />
+    )
+  })
+
   return (
     <main>
       <div className="dice-container">
-        <Die value={1}/>
-        <Die value={2}/>
-        <Die value={3}/>
-        <Die value={4}/>
-        <Die value={5}/>
-        <Die value={6}/>
-        <Die value={1}/>
-        <Die value={1}/>
-        <Die value={1}/>
-        <Die value={1}/>
+        {diceElements}
       </div>
     </main>
     
