@@ -12,7 +12,7 @@ export default function App() {
 
       randomNumbers.push({
         value: randomNumber,
-        isHeld: false,
+        isHeld: true,
         id: nanoid()
       })
     }
@@ -26,7 +26,11 @@ export default function App() {
 
   const diceElements = dice.map((dieObj) => {
     return (
-      <Die key={dieObj.id} value={dieObj.value} />
+      <Die 
+        key={dieObj.id} 
+        value={dieObj.value} 
+        isHeld={dieObj.isHeld}
+      />
     )
   })
 

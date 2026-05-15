@@ -1,7 +1,7 @@
 export default function Die( props ) {
   return (
     <>
-      <button>{props.value}</button>
+      <button style={{backgroundColor : props.isHeld ? '#59E391' : '#f3f6f4'}}>{props.value}</button>
     </>
   )
 }
