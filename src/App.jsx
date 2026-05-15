@@ -1,13 +1,20 @@
 /* eslint-disable react-hooks/purity */
 import Die from './components/Die'
 import { useState } from 'react'
+import { nanoid } from 'nanoid'
 
 export default function App() {  
 
   function generateAllNewDice(){
     const randomNumbers = [];
     for (let i = 0; i < 10; i++) {
-      randomNumbers.push(Math.ceil(Math.random() * 6))
+      const randomNumber = Math.ceil(Math.random() * 6)
+
+      randomNumbers.push({
+        value: randomNumber,
+        isHeld: false,
+        id: nanoid()
+      })
     }
     return (
       randomNumbers
@@ -17,9 +24,9 @@ export default function App() {
 
   const [dice, setDice] = useState(generateAllNewDice)
 
-  const diceElements = dice.map((number, index) => {
+  const diceElements = dice.map((dieObj) => {
     return (
-      <Die key={index} value={number} />
+      <Die key={dieObj.id} value={dieObj.value} />
     )
   })
 
