@@ -12,7 +12,7 @@ export default function App() {
 
       randomNumbers.push({
         value: randomNumber,
-        isHeld: true,
+        isHeld: false,
         id: nanoid()
       })
     }
@@ -25,7 +25,16 @@ export default function App() {
   const [dice, setDice] = useState(generateAllNewDice)
 
   function hold(id) {
-    console.log(id)
+    setDice(oldDice => oldDice.map(die => {
+      if (die.id === id) {
+        return {
+          id: die.id,
+          value: die.value,
+          isHeld: !die.isHeld
+        }
+      }
+      return die
+    }))
   }
 
   const diceElements = dice.map((dieObj) => {
