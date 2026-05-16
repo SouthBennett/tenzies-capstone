@@ -56,22 +56,30 @@ export default function App() {
   })
 
   function rollDice() {
-    setDice(oldDice => oldDice.map(die => {
-      if (die.isHeld === true) {
-        return {
-          ...die
+    if (!gameWon) {
+        setDice(oldDice => oldDice.map(die => {
+        if (die.isHeld === true) {
+          return {
+            ...die
+          }
         }
-      }
-      return {
-        ...die, 
-        value: Math.ceil(Math.random() * 6)
-      }
-    }))
+        return {
+          ...die, 
+          value: Math.ceil(Math.random() * 6)
+        }
+      }))
+    } else {
+      setDice(generateAllNewDice())
+    }
+    
   }
 
   return (
     <main>
       {gameWon && <Confetti />}
+      <div aria-live="polite" className="sr-only">
+        {gameWon && <p>Congratulations! You won! Press "New Game" to start again.</p>}
+      </div>
       <h1 className="title">Tenzies</h1>
       <p className="instructions">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
       <div className="dice-container">
