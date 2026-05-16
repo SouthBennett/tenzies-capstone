@@ -1,15 +1,22 @@
 /* eslint-disable react-hooks/purity */
 import Die from './components/Die'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { nanoid } from 'nanoid'
 import Confetti from 'react-confetti'
 
 export default function App() {  
 
   const [dice, setDice] = useState(() => generateAllNewDice())
+  const buttonRef = useRef(null)
 
   const gameWon = dice.every(die => die.isHeld) && 
     dice.every(die => die.value === dice[0].value)
+
+  useEffect(() => {
+    if (gameWon) {
+      buttonRef.current.focus()
+    }
+  }, [gameWon])  
 
   function generateAllNewDice(){
     const randomNumbers = [];
@@ -86,7 +93,7 @@ export default function App() {
         {diceElements}
       </div>
 
-      <button className="roll-dice" onClick={rollDice}>
+      <button ref={buttonRef} className="roll-dice" onClick={rollDice}>
         {gameWon ? "New Game" : "Roll"}
       </button>
     </main>
